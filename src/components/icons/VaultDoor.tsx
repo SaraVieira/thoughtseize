@@ -1,0 +1,61 @@
+export function VaultDoor() {
+  return (
+    <svg
+      width="120"
+      height="120"
+      viewBox="0 0 120 120"
+      fill="none"
+      className="lock-pulse"
+    >
+      <circle
+        cx="60"
+        cy="60"
+        r="55"
+        stroke="currentColor"
+        strokeWidth="1"
+        className="text-ink-muted"
+      />
+      <circle
+        cx="60"
+        cy="60"
+        r="48"
+        stroke="currentColor"
+        strokeWidth="0.5"
+        className="text-ink-muted"
+      />
+      <rect
+        x="38"
+        y="55"
+        width="44"
+        height="32"
+        rx="4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        className="text-ink-tertiary"
+      />
+      <path
+        d="M46 55V44a14 14 0 0 1 28 0v11"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        className="text-ink-tertiary"
+        strokeLinecap="round"
+      />
+      <circle
+        cx="60"
+        cy="68"
+        r="4"
+        fill="currentColor"
+        className="text-ink-muted"
+      />
+      <rect
+        x="58.5"
+        y="70"
+        width="3"
+        height="8"
+        rx="1.5"
+        fill="currentColor"
+        className="text-ink-muted"
+      />
+    </svg>
+  );
+}

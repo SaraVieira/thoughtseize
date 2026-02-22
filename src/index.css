@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Vault Palette === */
+  /* Surfaces — slate with blue undertone */
+  --color-vault-abyss: #0a0e15;
+  --color-vault-deep: #0f1219;
+  --color-vault-base: #151b27;
+  --color-vault-raised: #1b2336;
+  --color-vault-elevated: #222c42;
+
+  /* Text hierarchy */
+  --color-ink-primary: #e2e8f0;
+  --color-ink-secondary: #94a3b8;
+  --color-ink-tertiary: #64748b;
+  --color-ink-muted: #475569;
+
+  /* Borders — cool blue-white at low opacity works via rgba in classes */
+
+  /* Accent — amber/gold for unlocked, key, action */
+  --color-key-gold: #d4a54a;
+  --color-key-glow: #e8b84d;
+  --color-key-dim: #a17832;
+
+  /* Semantic */
+  --color-sealed-teal: #4a9e8e;
+  --color-sealed-dim: #3a7e71;
+  --color-breach-red: #c45c5c;
+  --color-breach-dim: #a34444;
+  --color-caution-amber: #c4944a;
+
+  /* Steel blue for secondary interactive */
+  --color-steel: #6b89ab;
+  --color-steel-dim: #4a6a8a;
+
+  /* Typography */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-vault-abyss);
+  color: var(--color-ink-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.25);
+}
+
+/* Vault door animation */
+@keyframes vault-slide-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+@keyframes vault-slide-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+@keyframes vault-content-reveal {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes lock-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes unlock-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(180deg); }
+}
+
+.vault-door-left {
+  animation: vault-slide-left 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.vault-door-right {
+  animation: vault-slide-right 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.vault-content-reveal {
+  animation: vault-content-reveal 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+}
+.fade-in {
+  animation: fade-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.lock-pulse {
+  animation: lock-pulse 2s ease-in-out infinite;
+}
