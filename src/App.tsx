@@ -13,7 +13,7 @@ import { Key, Plus } from "lucide-react";
 type View = "welcome" | "detail" | "create";
 
 function App() {
-  const { project, tree, openProject, refresh } = useProject();
+  const { project, tree, error: projectError, openProject, refresh } = useProject();
   const { content, decrypting, saving, error, decrypt, save, clear } =
     useSecret();
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
@@ -104,6 +104,11 @@ function App() {
           />
         </aside>
         <main className="flex-1 overflow-y-auto bg-vault-base">
+          {projectError && (
+            <div className="mx-5 mt-4 rounded-md border border-breach-red/20 bg-breach-red/[0.06] px-4 py-3 text-xs text-breach-red">
+              {projectError}
+            </div>
+          )}
           {view === "welcome" && (
             <WelcomePanel
               secretCount={project?.secrets.length ?? 0}

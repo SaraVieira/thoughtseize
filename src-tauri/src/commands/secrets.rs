@@ -101,11 +101,7 @@ pub fn create_secret(
         guard.as_ref().ok_or("No project open")?.clone()
     };
 
-    // Reject path traversal before creating directories
-    if relative_path.contains("..") {
-        return Err("Path traversal detected".to_string());
-    }
-    let file_path = project_dir.join(&relative_path);
+    let file_path = safe_resolve(&project_dir, &relative_path)?;
 
     // Create parent directories
     if let Some(parent) = file_path.parent() {
@@ -186,8 +182,8 @@ pub fn delete_secret(
 /// This imports secrets.nix (which resolves all group definitions) and extracts the
 /// publicKeys attribute for the given secret path.
 fn resolve_recipients(project_dir: &Path, secret_path: &str) -> Result<Vec<String>, String> {
-    // Validate the secret path doesn't contain nix injection
-    if secret_path.contains("${") || secret_path.contains("\\") || secret_path.contains('"') {
+    // Allowlist: only permit safe path characters (alphanumeric, ., _, /, -)
+    if !secret_path.chars().all(|c| c.is_alphanumeric() || "._/-".contains(c)) {
         return Err("Invalid characters in secret path".to_string());
     }
 

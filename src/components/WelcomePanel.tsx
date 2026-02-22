@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { VaultDoor } from "./icons/VaultDoor";
-import { UnlockedVaultIcon } from "./icons/UnluckedVault";
+import { UnlockedVaultIcon } from "./icons/UnlockedVault";
 
 interface WelcomePanelProps {
   secretCount: number;

@@ -67,7 +67,7 @@ export function CreateSecret({
         type="text"
         value={path}
         onChange={(e) => setPath(e.target.value)}
-        placeholder="e.g. geosurge.ai/service/SECRET_NAME.age"
+        placeholder="e.g. service/SECRET_NAME.age"
         className="mb-5 rounded-md border border-white/6 bg-vault-abyss px-3 py-2 font-mono text-xs text-ink-primary placeholder-ink-muted transition-colors focus:border-steel-dim focus:outline-none"
       />
 

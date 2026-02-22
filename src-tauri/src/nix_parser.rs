@@ -154,15 +154,15 @@ mod tests {
     const SAMPLE_NIX: &str = r#"{ meta }:
 let
   tech = meta.ssh.groups.TECH;
-  ciRunner = meta.ssh.nodes.grim-ci-runner;
-  wayfinderIdentity = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINu6Q wayfinder-identity"
+  ciRunner = meta.ssh.nodes.ci-runner;
+  identity = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINu6Q identity"
   ];
 in
 {
-  "geosurge.ai/watch/GEMINI_API_KEY.age".publicKeys =
-    tech ++ ciRunner ++ wayfinderIdentity;
-  "geosurge.ai/bigquery/sa-data-scripts.json.age".publicKeys = tech;
+  "watch/GEMINI_API_KEY.age".publicKeys =
+    tech ++ ciRunner ++ identity;
+  "bigquery/sa-data-scripts.json.age".publicKeys = tech;
 }"#;
 
     #[test]
@@ -171,7 +171,7 @@ in
         let group_names: Vec<&str> = result.groups.iter().map(|g| g.name.as_str()).collect();
         assert!(group_names.contains(&"tech"));
         assert!(group_names.contains(&"ciRunner"));
-        assert!(group_names.contains(&"wayfinderIdentity"));
+        assert!(group_names.contains(&"identity"));
     }
 
     #[test]
@@ -180,12 +180,12 @@ in
         assert_eq!(result.secrets.len(), 2);
 
         let gemini = result.secrets.iter()
-            .find(|s| s.path == "geosurge.ai/watch/GEMINI_API_KEY.age")
+            .find(|s| s.path == "watch/GEMINI_API_KEY.age")
             .unwrap();
-        assert_eq!(gemini.groups, vec!["tech", "ciRunner", "wayfinderIdentity"]);
+        assert_eq!(gemini.groups, vec!["tech", "ciRunner", "identity"]);
 
         let bq = result.secrets.iter()
-            .find(|s| s.path == "geosurge.ai/bigquery/sa-data-scripts.json.age")
+            .find(|s| s.path == "bigquery/sa-data-scripts.json.age")
             .unwrap();
         assert_eq!(bq.groups, vec!["tech"]);
     }
@@ -205,7 +205,7 @@ in
     fn test_remove_secret_entry() {
         let new_content = remove_secret_entry(
             SAMPLE_NIX,
-            "geosurge.ai/bigquery/sa-data-scripts.json.age",
+            "bigquery/sa-data-scripts.json.age",
         );
         assert!(!new_content.contains("sa-data-scripts"));
         assert!(new_content.contains("GEMINI_API_KEY"));
